@@ -50,6 +50,6 @@ test.only('Client App Login', async ({page})=>
     await dashboardpage.searchProductAddCart(productName);
     await dashboardpage.navigateToCart();
     await page.pause();
-
+                
 
 })

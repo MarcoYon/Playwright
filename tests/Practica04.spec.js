@@ -1,6 +1,7 @@
 const {test,expect} = require('@playwright/test');
-const {LoginPage} = require('../pagesobjects/LoginPage');
-const {DashboardPage} = require('../pagesobjects/DashboardPage');
+const {POManager} = require('../pagesobjects/POManager');
+//const {LoginPage} = require('../pagesobjects/LoginPage');
+//const {DashboardPage} = require('../pagesobjects/DashboardPage');
 
 
 test.only('Client App Login', async ({page})=>
@@ -38,15 +39,17 @@ test.only('Client App Login', async ({page})=>
 
     //**********************PAGE OBJECT**********************/
 
+    const poManager = new POManager(page);
+
     const email = "practicando01@test.com";
     const password = "Abc12345";
     const productName = "ZARA COAT 3";
 
-    const loginpage = new LoginPage(page);
+    const loginpage = poManager.getLoginPage();
     await loginpage.goUrl();
     await loginpage.validLogin(email, password);
 
-    const dashboardpage = new DashboardPage(page);
+    const dashboardpage = poManager.getDashboardPage();
     await dashboardpage.searchProductAddCart(productName);
     await dashboardpage.navigateToCart();
     await page.pause();

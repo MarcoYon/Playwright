@@ -18,10 +18,10 @@ class DashboardPage
         const count = await this.products.count();
 
         for (let i= 0; i< count; i++) {
-
+           
             if(await this.products.nth(i).locator("b").textContent() === productName )
             {
-                this.products.nth(i).locator("text= Add To Cart").click();
+                await this.products.nth(i).locator("text= Add To Cart").click();
                 break;      
             }
         }

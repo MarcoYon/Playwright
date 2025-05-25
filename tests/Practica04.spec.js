@@ -52,6 +52,34 @@ test.only('Client App Login', async ({page})=>
     const dashboardpage = poManager.getDashboardPage();
     await dashboardpage.searchProductAddCart(productName);
     await dashboardpage.navigateToCart();
+
+    //----------------- Agregando al  Carrito de Compras (Sin Page object)
+    await page.locator("div li").first().waitFor(); //espera hasta que se muestre el elemento, en este caso los productos
+
+    const bool = await page.locator("h3:has-text('ZARA COAT 3')").isVisible(); //isVisible no tiene espera automatica
+    expect(bool).toBeTruthy();
+
+    await page.locator("text=Checkout").click();
+    await page.locator("[placeholder*='Country']").pressSequentially("ind");
+    const dropdown = page.locator(".ta-results");
+    await dropdown.waitFor();
+    const optionsSelect = await dropdown.locator("button").count();
+
+    for (let i = 0; i< optionsSelect; i++) {
+        const text = await dropdown.locator("button").nth(i).textContent();
+
+        if(text.trim() === "India") 
+        {
+            await dropdown.locator("button").nth(i).click();
+        }
+
+    }
+
+    //----------------- Agregando al  Carrito de Compras - END
+
+
+
+
     await page.pause();
                 
 
